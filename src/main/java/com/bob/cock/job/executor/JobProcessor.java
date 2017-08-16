@@ -73,11 +73,7 @@ public class JobProcessor implements IJobProcessor {
         @Override
         protected void afterExecute(Runnable r, Throwable cause) {
             JobShard shard = ((JobShardCommand) r).getJobShard();
-            try {
-                jobManager.balanceJobShardVersion(shard.getJobShardCode());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            jobManager.balanceJobShardVersion(shard.getJobShardCode());
         }
     }
 }

@@ -7,24 +7,24 @@ package com.bob.cock.job;
  */
 public class Job {
     /** 任务标识*/
-	private String jobCode;
-	/** 任务处理bean*/
-	private String handlerBean;
-	/** 任务触发表达式*/
-	private volatile String cronExpress;
-	/** 心跳频率*/
-	private volatile long heartbeatRate;
-	/** 任务调度器死亡超时*/
-	private volatile int judgeDeadInterval;
-	/** 每次获取用于处理的数据量*/
-	private volatile int fetchNum;
-	/** 处理线程数量*/
-	private volatile int threadNum;
-	/** 任务分片*/
-	private volatile String jobShards;
-	/** 任务参数*/
-	private volatile String jobParameter;
-	
+    private String jobCode;
+    /** 任务处理bean*/
+    private String handlerBean;
+    /** 任务触发表达式*/
+    private volatile String cronExpress;
+    /** 心跳频率*/
+    private volatile long heartbeatRate;
+    /** 任务调度器死亡超时*/
+    private volatile int judgeDeadInterval;
+    /** 每次获取用于处理的数据量*/
+    private volatile int fetchNum;
+    /** 处理线程数量*/
+    private volatile int threadNum;
+    /** 任务分片*/
+    private volatile String jobShards;
+    /** 任务参数*/
+    private volatile String jobParameter;
+    
     public String getJobCode() {
         return jobCode;
     }

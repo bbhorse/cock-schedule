@@ -22,21 +22,21 @@ import com.bob.cock.job.utils.ContextUtils;
 public class SchedulerInitializer extends LifeCycle implements ApplicationContextAware {
     
     private static final Logger LOG = LoggerFactory.getLogger(SchedulerInitializer.class);
-	
-	private final IJobManager jobManager = new JobManager();
-	
-	private final ISchedulerManager schedulerManager = new SchedulerManager();
-	
-	private final Map<String, JobScheduler> schedulers = new ConcurrentHashMap<String, JobScheduler>();
-	
-	private final ScheduledExecutorService heartBeatScheduler = Executors.newSingleThreadScheduledExecutor();
-	
-	public SchedulerInitializer() {
-		/** 加载任务*/
-		doStart();
-	}
-	
-	private class HeartBeatJob implements Runnable {
+    
+    private final IJobManager jobManager = new JobManager();
+    
+    private final ISchedulerManager schedulerManager = new SchedulerManager();
+    
+    private final Map<String, JobScheduler> schedulers = new ConcurrentHashMap<String, JobScheduler>();
+    
+    private final ScheduledExecutorService heartBeatScheduler = Executors.newSingleThreadScheduledExecutor();
+    
+    public SchedulerInitializer() {
+        /** 加载任务*/
+        doStart();
+    }
+    
+    private class HeartBeatJob implements Runnable {
         @Override
         public void run() {
             try {
@@ -45,47 +45,47 @@ public class SchedulerInitializer extends LifeCycle implements ApplicationContex
                 LOG.error("Refresh schedulers error.", ex);
             }
         }
-	}
-	
-	@Override
-	public void doStop() {
-	    for (JobScheduler scheduler : schedulers.values()) {
-	        scheduler.stop();
-	    }
-	}
-	
-	@Override
-	public void doStart() {
-	    heartBeatScheduler.scheduleAtFixedRate(new HeartBeatJob(), 0, 2, TimeUnit.SECONDS);
-	}
-	
-	private void refreshSchedulers() {
-	    List<Job> jobs = jobManager.loadAllJobs();
-	    
-	    LOG.debug("There are {} jobs currently available.", jobs.size());
-	    
-	    for (Job job : jobs) {
-	        JobScheduler scheduler = schedulers.get(job.getJobCode());
-	        if (null == scheduler) {
-	            scheduler = new JobScheduler(job, jobManager, schedulerManager);
-	            schedulers.put(job.getJobCode(), scheduler);
-	            scheduler.start();
-	        }
-	        
-	        //移除失效scheduler
-	        if (scheduler.isExpired()) {
-	            scheduler.signalStop();
-	            schedulers.remove(job.getJobCode());
-	        }
-	        
-	        //刷新job信息
-	        scheduler.refreshJob(job);
-	    }
-	}
-	
-	@Override
+    }
+    
+    @Override
+    public void doStop() {
+        for (JobScheduler scheduler : schedulers.values()) {
+            scheduler.stop();
+        }
+    }
+    
+    @Override
+    public void doStart() {
+        heartBeatScheduler.scheduleAtFixedRate(new HeartBeatJob(), 0, 2, TimeUnit.SECONDS);
+    }
+    
+    private void refreshSchedulers() {
+        List<Job> jobs = jobManager.loadAllJobs();
+        
+        LOG.debug("There are {} jobs currently available.", jobs.size());
+        
+        for (Job job : jobs) {
+            JobScheduler scheduler = schedulers.get(job.getJobCode());
+            if (null == scheduler) {
+                scheduler = new JobScheduler(job, jobManager, schedulerManager);
+                schedulers.put(job.getJobCode(), scheduler);
+                scheduler.start();
+            }
+            
+            //移除失效scheduler
+            if (scheduler.isExpired()) {
+                scheduler.signalStop();
+                schedulers.remove(job.getJobCode());
+            }
+            
+            //刷新job信息
+            scheduler.refreshJob(job);
+        }
+    }
+    
+    @Override
     public void setApplicationContext(ApplicationContext applicationContext)
             throws BeansException {
-	    ContextUtils.setApplicationContext(applicationContext);
+        ContextUtils.setApplicationContext(applicationContext);
     }
 }

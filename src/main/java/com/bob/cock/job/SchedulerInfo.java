@@ -10,29 +10,29 @@ public class SchedulerInfo {
     private String uuid;
 
     private String jobCode;
-	
-	private String register;
-	
-	private Long lastHeartbeatTime;
-	
-	private String ip;
-	
-	private String hostName;
-	
-	private String status;
-	
-	public SchedulerInfo() {
-	}
-	
-	public SchedulerInfo(Integer id, String jobCode, String register, Long lastHeartbeatTime, String status) {
-	    this.id = id;
-	    this.uuid = UUIDUtils.randomUUID();
-	    this.jobCode = jobCode;
-	    this.register = register;
-	    this.lastHeartbeatTime = lastHeartbeatTime;
-	    this.ip = ScheduleUtils.getLocalIP();
-	    this.hostName = ScheduleUtils.getLocalHostName();
-	    this.status = status;
+    
+    private String register;
+    
+    private Long lastHeartbeatTime;
+    
+    private String ip;
+    
+    private String hostName;
+    
+    private String status;
+    
+    public SchedulerInfo() {
+    }
+    
+    public SchedulerInfo(Integer id, String jobCode, String register, Long lastHeartbeatTime, String status) {
+        this.id = id;
+        this.uuid = UUIDUtils.randomUUID();
+        this.jobCode = jobCode;
+        this.register = register;
+        this.lastHeartbeatTime = lastHeartbeatTime;
+        this.ip = ScheduleUtils.getLocalIP();
+        this.hostName = ScheduleUtils.getLocalHostName();
+        this.status = status;
     }
 
     public Integer getId() {

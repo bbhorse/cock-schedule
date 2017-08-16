@@ -1,21 +1,21 @@
 package com.bob.cock.job;
 
 public class JobShard {
-	/** 任务标识*/
-	private String jobCode;
-	/** 任务项标识*/
-	private String jobShardCode;
-	/** 当前处理调度器*/
-	private Integer curServer;
-	/** 申请获取处理权的调度器*/
-	private Integer reqServer;
-	/** 当前版本*/
-	private int curVersion;
-	/**目标版本*/
-	private int reqVersion;
-	/** 下次调度时间*/
-	private Long nextScheduleTime;
-	
+    /** 任务标识*/
+    private String jobCode;
+    /** 任务项标识*/
+    private String jobShardCode;
+    /** 当前处理调度器*/
+    private Integer curServer;
+    /** 申请获取处理权的调度器*/
+    private Integer reqServer;
+    /** 当前版本*/
+    private int curVersion;
+    /**目标版本*/
+    private int reqVersion;
+    /** 下次调度时间*/
+    private Long nextScheduleTime;
+    
     public String getJobCode() {
         return jobCode;
     }
